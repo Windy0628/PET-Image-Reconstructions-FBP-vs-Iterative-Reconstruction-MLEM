@@ -75,7 +75,7 @@ Figure2. One noise realisation (realisation 0 of the experiment) per count level
 ```bash
 git clone https://github.com/Windy0628/PET-Image-Reconstructions-FBP-vs-Iterative-Reconstruction-MLEM-OSEM-.git
 cd PET-Image-Reconstructions-FBP-vs-Iterative-Reconstruction-MLEM-OSEM-
-pip install -r requirements.txt
+pip install -r requirements
 jupyter notebook notebooks/main.ipynb
 ```
 Or open `notebooks/main.ipynb` in Google Colab and select **Runtime → Run all**.
