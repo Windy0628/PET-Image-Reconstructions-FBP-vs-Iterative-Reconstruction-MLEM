@@ -29,10 +29,10 @@ Figure1. the result of mean and sd. of 10 simulated noise experiments.
 | Random seeds | `SEED = 0`. Realisation *r* at count level *i* uses `np.random.default_rng([0, i, r])` |
 
 ### Reconstruction
-- **FBP:** did comparisons of five built-in filters on noise-free data. Multiply the remp filter by the Hahn window with different value of the Nyquist frequency. The validity of this filter was verified by omitting the window function and comparing the result with `iradon(filter_name=‘ramp’)`: the maximum relative error was 2.6 × 10⁻¹⁵.
-- **MLEM:** implemented from scratch in NumPy, update rule:
+- **FBP:** ramp filter multiplied by a Hann window with cut-off 0.1, 0.15, 0.25, 0.35, 0.5, 0.75 and 1.0 × Nyquist. Back-projection uses `skimage.transform.iradon`. `iradon` has no cut-off parameter, so the filter is implemented in the notebook. It is validated by setting no window and comparing with `iradon(filter_name="ramp")`: the maximum relative difference is 2.6 × 10⁻¹⁵. A separate comparison of scikit-image's five built-in filters on noise-free data is also included.
+- **MLEM:** implemented from scratch in NumPy (in `notebooks/main.ipynb`), with update rule
   x⁽ᵏ⁺¹⁾ = x⁽ᵏ⁾ / (Aᵀ1) · Aᵀ( y / (A x⁽ᵏ⁾) )
-  where A is forward projection (`radon`) and Aᵀ is unfiltered back-projection.
+  where A is forward projection (`skimage.transform.radon`) and Aᵀ is unfiltered back-projection (`iradon(filter_name=None)`). Images were recorded at 2, 3, 5, 7, 10, 15, 20, 30, 50 and 100 iterations.
 - **Validation:**
   - Adjoint test. For random x and y, ⟨Ax, y⟩ / ⟨x, Aᵀy⟩ = 114.54, constant to within 0.005% across draws. iradon(filter_name=None) is therefore the adjoint of radon up to a constant factor, and that factor cancels between the numerator and the sensitivity image Aᵀ1.
   - Monotonicity. On noise-free data, NRMSE decreased and the Poisson log-likelihood increased at every one of 100 iterations (figure).
