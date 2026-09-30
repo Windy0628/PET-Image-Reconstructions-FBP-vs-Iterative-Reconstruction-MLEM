@@ -93,6 +93,10 @@ Expected runtime: about 5 minutes on the development machine, most of it in the 
 ├── requirements
 └── README.md
 ```
+## Author
+Windy Fang: MEng Biomedical Eng
+Email: windyfang7@gmail.com
+
 ## References
 
 1. Shepp, L. A. & Vardi, Y. (1982). Maximum likelihood reconstruction for emission tomography. IEEE Transactions on Medical Imaging, 1(2), 113–122.
