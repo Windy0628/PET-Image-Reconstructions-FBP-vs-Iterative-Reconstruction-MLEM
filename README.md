@@ -10,12 +10,11 @@ Figure1. the result of mean and sd. of 10 simulated noise experiments.
 ## Key findings
 - MLEM's advantage over FBP grows with count level.
 - At 10⁴ counts, MLEM's lower NRMSE does not mean a better image.
-- FBP noise follows Poisson statistics.
 
 ## Background
 - **PET and count statistics:** positron annihilation, coincidence detection, lines of response; detected counts follow a Poisson distribution, so relative noise scales as 1/√N [3].
 - **FBP:** analytic inversion of the Radon transform; fast, but does not model Poisson noise [2,4].
-- **MLEM:** is based on Poisson statistical properties of PET data, and theoretically ensures that at each iteration the 'likelihood' either increases or remains unchanged. [6]
+- **MLEM:** is based on Poisson statistical properties of PET data, and theoretically ensures that at each iteration the 'likelihood' either increases or remains unchanged. [1]
 
 ## Method
 
@@ -31,7 +30,7 @@ Figure1. the result of mean and sd. of 10 simulated noise experiments.
 
 ### Reconstruction
 - **FBP:** did comparisons of five built-in filters on noise-free data. Multiply the remp filter by the Hahn window with different value of the Nyquist frequency. The validity of this filter was verified by omitting the window function and comparing the result with `iradon(filter_name=‘ramp’)`: the maximum relative error was 2.6 × 10⁻¹⁵.
-- **MLEM:** implemented from scratch in NumPy (`src/mlem.py`), update rule:
+- **MLEM:** implemented from scratch in NumPy, update rule:
   x⁽ᵏ⁺¹⁾ = x⁽ᵏ⁾ / (Aᵀ1) · Aᵀ( y / (A x⁽ᵏ⁾) )
   where A is forward projection (`radon`) and Aᵀ is unfiltered back-projection.
 - **Validation:**
@@ -87,7 +86,7 @@ Expected runtime: about 5 minutes on the development machine, most of it in the 
 ├── notebooks/
 │   └── main.ipynb        # full pipeline: simulation → reconstruction → evaluation → figures
 ├── figures/              # generated plots (written by the notebook)
-├── requirements.txt
+├── requirements
 └── README.md
 ```
 ## References
@@ -97,7 +96,6 @@ Expected runtime: about 5 minutes on the development machine, most of it in the 
 3. Cherry, S. R., Sorenson, J. A. & Phelps, M. E. (2012). Physics in Nuclear Medicine (4th ed.). Elsevier Saunders.
 4. Kak, A. C. & Slaney, M. (1988). Principles of Computerized Tomographic Imaging. IEEE Press.
 5. van der Walt, S. et al. (2014). scikit-image: image processing in Python. PeerJ, 2, e453.
-6. Bohrium Encyclopedia. PET image reconstruction methods and corrections]. In Foundations of Medical Imaging. Bohrium SciencePedia. https://www.bohrium.com/sciencepedia/feynman/foundations_of_medical_imaging_undergraduate-PET_image_reconstruction_methods_and_corrections.
 
 
 # TBC: further work about Ordered-Subsets Expectation-Maximization, OSEM
