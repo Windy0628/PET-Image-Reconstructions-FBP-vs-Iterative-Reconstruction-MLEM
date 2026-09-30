@@ -72,12 +72,13 @@ Figure2. One noise realisation (realisation 0 of the experiment) per count level
 
 ## Repository structure
 
+```
 ├── notebooks/
 │   └── main.ipynb        # full pipeline: simulation → reconstruction → evaluation → figures
 ├── figures/              # generated plots
 ├── requirements.txt
 └── README.md
-
+```
 ## References
 
 1. Shepp, L. A. & Vardi, Y. (1982). Maximum likelihood reconstruction for emission tomography. IEEE Transactions on Medical Imaging, 1(2), 113–122.
