@@ -1,6 +1,6 @@
 # Count-Level Effects in Emission Tomography Reconstruction: FBP vs MLEM
 
-## Disclaimer: AI is used to assist authors in implementing MLEM from scratch and coding revising and refining.
+## Disclaimer: AI is used to assist authors in implementing MLEM from scratch and coding revision and refining.
 
 How does the number of detected counts affect image quality when reconstructing simulated 2D PET data with filtered back-projection (FBP) versus maximum-likelihood expectation maximisation (MLEM)?
 
