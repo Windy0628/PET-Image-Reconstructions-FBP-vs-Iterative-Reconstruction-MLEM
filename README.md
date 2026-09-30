@@ -1,5 +1,7 @@
 # Count-Level Effects in Emission Tomography Reconstruction: FBP vs MLEM
 
+## Disclaimer: AI is used to assist authors in implementing MLEM from scratch
+
 How does the number of detected counts affect image quality when reconstructing simulated 2D PET data with filtered back-projection (FBP) versus maximum-likelihood expectation maximisation (MLEM)?
 
 <img width="1489" height="455" alt="image" src="https://github.com/user-attachments/assets/60c8ef60-7f2f-46af-8813-b07e75efd438" />
@@ -8,8 +10,10 @@ Figure1. the result of mean and sd. of 10 simulated noise experiments.
 
 
 ## Key findings
-- MLEM's advantage over FBP grows with count level.
+- MLEM's advantage over FBP grows with count level. MLEM lowered NRMSE by 2.8% at 10⁴ counts, 15% at 10⁵ and 29% at 10⁶ (paired differences −0.017 ± 0.004, −0.068 ± 0.004 and −0.085 ± 0.003). MLEM was better in 10 of 10 realisations at every level.
 - At 10⁴ counts, MLEM's lower NRMSE does not mean a better image.
+- **The optimal MLEM iteration number increases with counts: 5, 15 and 30 iterations** at 10⁴, 10⁵ and 10⁶. Past that point MLEM starts fitting noise. At 100 iterations it is worse than the best FBP at every count level.
+- **FBP noise follows Poisson statistics.** At a fixed filter (Hann, cut-off = Nyquist), background SD fell by a factor of 3.19 from 10⁴ to 10⁵ counts and by 3.11 from 10⁵ to 10⁶. The expected factor is √10 ≈ 3.16.
 
 ## Background
 - **PET and count statistics:** positron annihilation, coincidence detection, lines of response; detected counts follow a Poisson distribution, so relative noise scales as 1/√N [3].
