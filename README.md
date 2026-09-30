@@ -1,6 +1,6 @@
 # Count-Level Effects in Emission Tomography Reconstruction: FBP vs MLEM
 
-## Disclaimer: AI is used to assist authors in implementing MLEM from scratch
+## Disclaimer: AI is used to assist authors in implementing MLEM from scratch and coding revising and refining.
 
 How does the number of detected counts affect image quality when reconstructing simulated 2D PET data with filtered back-projection (FBP) versus maximum-likelihood expectation maximisation (MLEM)?
 
@@ -34,7 +34,7 @@ Figure1. the result of mean and sd. of 10 simulated noise experiments.
 
 ### Reconstruction
 - **FBP:** ramp filter multiplied by a Hann window with cut-off 0.1, 0.15, 0.25, 0.35, 0.5, 0.75 and 1.0 × Nyquist. Back-projection uses `skimage.transform.iradon`. `iradon` has no cut-off parameter, so the filter is implemented in the notebook. It is validated by setting no window and comparing with `iradon(filter_name="ramp")`: the maximum relative difference is 2.6 × 10⁻¹⁵. A separate comparison of scikit-image's five built-in filters on noise-free data is also included.
-- **MLEM:** implemented from scratch in NumPy (in `notebooks/main.ipynb`), with update rule
+- **MLEM:** implemented directly in NumPy (in `notebooks/main.ipynb`) without a reconstruction library, with update rule
   x⁽ᵏ⁺¹⁾ = x⁽ᵏ⁾ / (Aᵀ1) · Aᵀ( y / (A x⁽ᵏ⁾) )
   where A is forward projection (`skimage.transform.radon`) and Aᵀ is unfiltered back-projection (`iradon(filter_name=None)`). Images were recorded at 2, 3, 5, 7, 10, 15, 20, 30, 50 and 100 iterations.
 - **Validation:**
