@@ -5,7 +5,7 @@
 How does the number of detected counts affect image quality when reconstructing simulated 2D PET data with filtered back-projection (FBP) versus maximum-likelihood expectation maximisation (MLEM)?
 
 <img width="1489" height="455" alt="image" src="https://github.com/user-attachments/assets/60c8ef60-7f2f-46af-8813-b07e75efd438" />
-Figure1. the result of mean and sd. of 10 simulated noise experiments. 
+Figure1. Contrast–noise trade-off for FBP (Hann cut-off) and MLEM (iterations); mean ± SD over 10 noise realisations. Stars mark the NRMSE-optimal settings.
 
 
 
@@ -13,7 +13,7 @@ Figure1. the result of mean and sd. of 10 simulated noise experiments.
 - MLEM's advantage over FBP grows with count level. MLEM lowered NRMSE by 2.8% at 10⁴ counts, 15% at 10⁵ and 29% at 10⁶ (paired differences −0.017 ± 0.004, −0.068 ± 0.004 and −0.085 ± 0.003). MLEM was better in 10 of 10 realisations at every level.
 - At 10⁴ counts, MLEM's lower NRMSE does not mean a better image.
 - **The optimal MLEM iteration number increases with counts: 5, 15 and 30 iterations** at 10⁴, 10⁵ and 10⁶. Past that point MLEM starts fitting noise. At 100 iterations it is worse than the best FBP at every count level.
-- **FBP noise follows Poisson statistics.** At a fixed filter (Hann, cut-off = Nyquist), background SD fell by a factor of 3.19 from 10⁴ to 10⁵ counts and by 3.11 from 10⁵ to 10⁶. The expected factor is √10 ≈ 3.16.
+- **FBP image noise scales as 1/√counts, as expected from Poisson counting statistics propagated through a linear reconstruction.** At a fixed filter (Hann, cut-off = Nyquist), background SD fell by a factor of 3.19 from 10⁴ to 10⁵ counts and by 3.11 from 10⁵ to 10⁶. The expected factor is √10 ≈ 3.16.
 
 ## Background
 - **PET and count statistics:** positron annihilation, coincidence detection, lines of response; detected counts follow a Poisson distribution, so relative noise scales as 1/√N [3].
@@ -33,7 +33,7 @@ Figure1. the result of mean and sd. of 10 simulated noise experiments.
 | Random seeds | `SEED = 0`. Realisation *r* at count level *i* uses `np.random.default_rng([0, i, r])` |
 
 ### Reconstruction
-- **FBP:** ramp filter multiplied by a Hann window with cut-off 0.1, 0.15, 0.25, 0.35, 0.5, 0.75 and 1.0 × Nyquist. Back-projection uses `skimage.transform.iradon`. `iradon` has no cut-off parameter, so the filter is implemented in the notebook. It is validated by setting no window and comparing with `iradon(filter_name="ramp")`: the maximum relative difference is 2.6 × 10⁻¹⁵. A separate comparison of scikit-image's five built-in filters on noise-free data is also included.
+- **FBP:** ramp filter multiplied by a Hann window with cut-off 0.1, 0.15, 0.25, 0.35, 0.5, 0.75 and 1.0 × Nyquist. Back-projection uses `skimage.transform.iradon`. `iradon` has no cut-off parameter, so the filter is implemented in the notebook. It is validated by setting no window and comparing with `iradon(filter_name="ramp")`: the maximum relative difference is 2.5 × 10⁻¹⁵. A separate comparison of scikit-image's five built-in filters on noise-free data is also included.
 - **MLEM:** implemented directly in NumPy (in `notebooks/main.ipynb`) without a reconstruction library, with update rule
   x⁽ᵏ⁺¹⁾ = x⁽ᵏ⁾ / (Aᵀ1) · Aᵀ( y / (A x⁽ᵏ⁾) )
   where A is forward projection (`skimage.transform.radon`) and Aᵀ is unfiltered back-projection (`iradon(filter_name=None)`). Images were recorded at 2, 3, 5, 7, 10, 15, 20, 30, 50 and 100 iterations.
@@ -102,4 +102,4 @@ Expected runtime: about 5 minutes on the development machine, most of it in the 
 5. van der Walt, S. et al. (2014). scikit-image: image processing in Python. PeerJ, 2, e453.
 
 
-# TBC: further work about Ordered-Subsets Expectation-Maximization, OSEM
+# Future Work: further work about Ordered-Subsets Expectation-Maximization, OSEM
