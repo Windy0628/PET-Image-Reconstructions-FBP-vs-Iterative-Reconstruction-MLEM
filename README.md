@@ -98,3 +98,6 @@ Expected runtime: about 5 minutes on the development machine, most of it in the 
 4. Kak, A. C. & Slaney, M. (1988). Principles of Computerized Tomographic Imaging. IEEE Press.
 5. van der Walt, S. et al. (2014). scikit-image: image processing in Python. PeerJ, 2, e453.
 6. Bohrium Encyclopedia. PET image reconstruction methods and corrections]. In Foundations of Medical Imaging. Bohrium SciencePedia. https://www.bohrium.com/sciencepedia/feynman/foundations_of_medical_imaging_undergraduate-PET_image_reconstruction_methods_and_corrections.
+
+
+# TBC: further work about Ordered-Subsets Expectation-Maximization, OSEM
