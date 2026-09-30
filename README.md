@@ -56,7 +56,8 @@ Figure1. the result of mean and sd. of 10 simulated noise experiments.
 | 10⁶ | MLEM | 30 iter | 0.213 ± 0.002 | 1.05 ± 0.05 | 0.038 ± 0.001 |
 | 10⁶ | MLEM | 100 iter | 0.339 ± 0.005 | 1.01 ± 0.06 | 0.095 ± 0.002 |
 
-<img width="1281" height="1004" alt="image" src="https://github.com/user-attachments/assets/4b2e37e5-d959-4077-82f7-6140a50390f8" />
+<img width="1281" height="1004" alt="image" src="https://github.com/user-attachments/assets/6f544b17-be18-48f7-87f8-03d8f82e19b7" />
+
 Figure2. One noise realisation (realisation 0 of the experiment) per count level, reconstructed with the same settings as the table. At 10⁴ counts neither method recovers the internal structure. At 100 iterations MLEM has fitted the noise at every count level. The per-image CR values (e.g. 1.24 for FBP at 10⁴) differ from the table means because single-realisation CR is dominated by noise at low counts.
 
 ## Limitations
@@ -69,13 +70,23 @@ Figure2. One noise realisation (realisation 0 of the experiment) per count level
 - No attenuation, scatter, random coincidences or detector response modelled.
 - Single synthetic phantom; results may not generalise to clinical images.
 
+## Reproducing the results
+ 
+```bash
+git clone https://github.com/Windy0628/PET-Image-Reconstructions-FBP-vs-Iterative-Reconstruction-MLEM-OSEM-.git
+cd PET-Image-Reconstructions-FBP-vs-Iterative-Reconstruction-MLEM-OSEM-
+pip install -r requirements.txt
+jupyter notebook notebooks/main.ipynb
+```
+Or open `notebooks/main.ipynb` in Google Colab and select **Runtime → Run all**.
+Expected runtime: about 5 minutes on the development machine, most of it in the 10-realisation experiment (Step 6). Runtime on Colab has not been measured.
 
 ## Repository structure
-
+ 
 ```
 ├── notebooks/
 │   └── main.ipynb        # full pipeline: simulation → reconstruction → evaluation → figures
-├── figures/              # generated plots
+├── figures/              # generated plots (written by the notebook)
 ├── requirements.txt
 └── README.md
 ```
