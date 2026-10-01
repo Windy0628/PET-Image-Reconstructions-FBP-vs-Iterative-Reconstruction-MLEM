@@ -77,7 +77,7 @@ Figure2. One noise realisation (realisation 0 of the experiment) per count level
  
 ```bash
 git clone https://github.com/Windy0628/PET-Image-Reconstructions-FBP-vs-Iterative-Reconstruction-MLEM-OSEM-.git
-cd PET-Image-Reconstructions-FBP-vs-Iterative-Reconstruction-MLEM-OSEM-
+cd PET-Image-Reconstructions-FBP-vs-Iterative-Reconstruction-MLEM
 pip install -r requirements
 jupyter notebook notebooks/main.ipynb
 ```
