@@ -7,7 +7,7 @@ How does the number of detected counts affect image quality when reconstructing 
 Two extensions put the count levels in physical context: photon attenuation in water with and without attenuation correction, and the radioactive decay, patient dose and counts of a standard versus a half-dose ¹⁸F-FDG scan.
 
 <img width="1489" height="455" alt="image" src="https://github.com/user-attachments/assets/60c8ef60-7f2f-46af-8813-b07e75efd438" />
-Figure1. Contrast–noise trade-off for FBP (Hann cut-off) and MLEM (iterations); mean ± SD over 10 noise realisations. Stars mark the NRMSE-optimal settings.
+Figure. Contrast–noise trade-off for FBP (Hann cut-off) and MLEM (iterations); mean ± SD over 10 noise realisations. Stars mark the NRMSE-optimal settings.
 
 
 
@@ -22,7 +22,7 @@ Figure1. Contrast–noise trade-off for FBP (Hann cut-off) and MLEM (iterations)
 ## Background
 - **PET and count statistics:** positron annihilation, coincidence detection, lines of response; detected counts follow a Poisson distribution, so relative noise scales as 1/√N [3].
 - **FBP:** analytic inversion of the Radon transform; fast, but does not model Poisson noise [2,4].
-- **MLEM:** is based on Poisson statistical properties of PET data, and theoretically ensures that at each iteration the 'likelihood' either increases or remains unchanged. [2]
+- **MLEM:** is based on Poisson statistical properties of PET data, and theoretically ensures that at each iteration the 'likelihood' either increases or remains unchanged. [1][2]
 - **Attenuation.** Both 511 keV photons must leave the body to be detected, so the probability that a pair survives is exp(−∫μ dl) along the whole LOR. It depends on the total path length through the body, not on where along the LOR the annihilation happened [3]. Deep structures are therefore suppressed, and attenuation correction is required for quantitative images.
 - **Decay and dose.** ¹⁸F decays with half-life T½, so activity falls as A(t) = A₀ exp(−λt) with λ = ln 2 / T½. The effective dose to the patient is the injected activity multiplied by a published dose coefficient (mSv/MBq) [7].
 
@@ -45,7 +45,8 @@ Figure1. Contrast–noise trade-off for FBP (Hann cut-off) and MLEM (iterations)
   where A is forward projection (`skimage.transform.radon`) and Aᵀ is unfiltered back-projection (`iradon(filter_name=None)`). Images were recorded at 2, 3, 5, 7, 10, 15, 20, 30, 50 and 100 iterations.
 - **Validation:**
   - Adjoint test. For random x and y, ⟨Ax, y⟩ / ⟨x, Aᵀy⟩ = 114.54, constant to within 0.005% across draws. iradon(filter_name=None) is therefore the adjoint of radon up to a constant factor, and that factor cancels between the numerator and the sensitivity image Aᵀ1.
-  - Monotonicity. On noise-free data, NRMSE decreased and the Poisson log-likelihood increased at every one of 100 iterations (figure).
+  - Monotonicity. On noise-free data, NRMSE decreased and the Poisson log-likelihood increased at every one of 100 iterations.<img width="1848" height="418" alt="noisy_sinograms" src="https://github.com/user-attachments/assets/a56244eb-a36d-4c80-9a59-af4af59b4d4d" />
+
 
 ### Attenuation (Step 7)
 | Parameter | Value |
@@ -75,6 +76,7 @@ The half-dose simulation halves the counts at each level (5 × 10³, 5 × 10⁴,
 - Background noise: standard deviation of pixel values within the uniform 0.2-intensity region.
 
 "Mean ± SD" throughout is the spread across the 10 realisations, **not** the standard error of the mean. The standard error is smaller by a factor of √10.
+
 ## Results
 | Counts | Method | Setting | NRMSE | Contrast recovery | Background SD |
 |---|---|---|---|---|---|
@@ -90,7 +92,7 @@ The half-dose simulation halves the counts at each level (5 × 10³, 5 × 10⁴,
 
 <img width="1281" height="1004" alt="image" src="https://github.com/user-attachments/assets/6f544b17-be18-48f7-87f8-03d8f82e19b7" />
 
-Figure2. One noise realisation (realisation 0 of the experiment) per count level, reconstructed with the same settings as the table. At 10⁴ counts neither method recovers the internal structure. At 100 iterations MLEM has fitted the noise at every count level. The per-image CR values (e.g. 1.24 for FBP at 10⁴) differ from the table means because single-realisation CR is dominated by noise at low counts.
+Figure. One noise realisation (realisation 0 of the experiment) per count level, reconstructed with the same settings as the table. At 10⁴ counts neither method recovers the internal structure. At 100 iterations MLEM has fitted the noise at every count level. The per-image CR values (e.g. 1.24 for FBP at 10⁴) differ from the table means because single-realisation CR is dominated by noise at low counts.
 
 ### Attenuation and attenuation correction
  
@@ -152,7 +154,7 @@ The SD ratios match the √2 expected for Poisson noise. Halving the dose at 10�
 ```bash
 git clone https://github.com/Windy0628/PET-Image-Reconstructions-FBP-vs-Iterative-Reconstruction-MLEM.git
 cd PET-Image-Reconstructions-FBP-vs-Iterative-Reconstruction-MLEM
-pip install -r requirements
+pip install -r requirements.txt
 jupyter notebook notebooks/main.ipynb
 ```
 Or open `notebooks/main.ipynb` in Google Colab and select **Runtime → Run all**.
@@ -164,13 +166,12 @@ Expected runtime: about 7 minutes on the development machine, most of it in the 
 ```
 ├── notebooks/
 │   └── main.ipynb        # full pipeline: simulation → reconstruction → evaluation → figures
-├── figures/              # generated plots (written by the notebook, incl. attenuation.png)
-├── requirements
+├── figures/              # generated plots (written by the notebook)
+├── requirements.txt
 └── README.md
 ```
 ## Author
-Windy Fang: MEng Biomedical Eng
-Email: windyfang7@gmail.com
+Windy Fang: MEng Biomedical Eng student
 
 ## References
 
