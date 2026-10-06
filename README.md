@@ -103,7 +103,8 @@ Mean ± SD over 10 noise realisations. Only 2.2 × 10⁵ of the 10⁶ counts are
 | MLEM | no | 0.717 ± 0.001 | −0.60 ± 0.13 | −92.1 ± 0.2% |
 | MLEM | yes | 0.340 ± 0.004 | 0.95 ± 0.10 | −1.4 ± 1.0% |
  
-![Attenuation](figures/attenuation.png)
+<img width="2029" height="972" alt="attenuation" src="https://github.com/user-attachments/assets/ed737b6c-acd1-42c7-a7f0-b0e6a49344c7" />
+
 *Left: μ map and the transmission exp(−∫μ dl) of every LOR; the longest chord (24 cm) transmits 10%. Middle and right: reconstructions without AC (top, each on its own grey scale) and with AC (bottom), and horizontal profiles. Without AC only the skull ring at the edge survives and the interior is almost empty. NRMSE without AC is dominated by the overall 92% loss of signal; contrast recovery, which does not depend on overall scale, shows the shape distortion.*
  
 ### Decay, dose and half-dose imaging
