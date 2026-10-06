@@ -6,9 +6,8 @@ How does the number of detected counts affect image quality when reconstructing 
 
 Two extensions put the count levels in physical context: photon attenuation in water with and without attenuation correction, and the radioactive decay, patient dose and counts of a standard versus a half-dose ¹⁸F-FDG scan.
 
-<img width="1489" height="455" alt="image" src="https://github.com/user-attachments/assets/60c8ef60-7f2f-46af-8813-b07e75efd438" />
-Figure. Contrast–noise trade-off for FBP (Hann cut-off) and MLEM (iterations); mean ± SD over 10 noise realisations. Stars mark the NRMSE-optimal settings.
-
+![Contrast–noise trade-off for FBP (Hann cut-off) and MLEM (iterations); mean ± SD over 10 noise realisations. Stars mark the NRMSE-optimal settings.
+](figures/contrast_noise.png)
 
 
 ## Key findings
