@@ -103,7 +103,7 @@ Mean ± SD over 10 noise realisations. Only 2.2 × 10⁵ of the 10⁶ counts are
 | FBP | yes | 0.473 ± 0.006 | 0.95 ± 0.11 | +0.3 ± 1.1% |
 | MLEM | no | 0.717 ± 0.001 | −0.60 ± 0.13 | −92.1 ± 0.2% |
 | MLEM | yes | 0.340 ± 0.004 | 0.95 ± 0.10 | −1.4 ± 1.0% |
- ![Photon attenuation in a water-filled object, and reconstruction with and without attenuation correction (AC).](figures/attenuation)
+ ![Photon attenuation in a water-filled object, and reconstruction with and without attenuation correction (AC).](figures/attenuation.png)
 
 ### Decay, dose and half-dose imaging
  
