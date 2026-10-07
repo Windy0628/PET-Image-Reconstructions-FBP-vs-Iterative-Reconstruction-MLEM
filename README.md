@@ -9,10 +9,11 @@ Two extensions put the count levels in physical context: photon attenuation in w
 ![Contrast–noise trade-off for FBP (Hann cut-off) and MLEM (iterations); mean ± SD over 10 noise realisations. Stars mark the NRMSE-optimal settings.
 ](figures/contrast_noise.png)
 
+*Contrast recovery against background noise, mean ± SD over 10 noise realisations. Each curve sweeps one method's parameter: Hann cut-off for FBP, iteration number for MLEM. Stars mark the setting with the lowest NRMSE. At 10⁴ counts MLEM's NRMSE-optimal image keeps only half the contrast; at 10⁶ counts MLEM reaches full contrast at lower noise than FBP. The leftward hook of the FBP curves at the lowest cut-offs is blur leaking into the background region, not noise (see Limitations).*
 
 ## Key findings
 - MLEM's advantage over FBP grows with count level. MLEM lowered NRMSE by 2.8% at 10⁴ counts, 15% at 10⁵ and 29% at 10⁶ (paired differences −0.017 ± 0.004, −0.068 ± 0.004 and −0.085 ± 0.003). MLEM was better in 10 of 10 realisations at every level.
-- At 10⁴ counts, MLEM's lower NRMSE does not mean a better image.
+- At 10⁴ counts, MLEM's lower NRMSE does not mean a better image. Its NRMSE-optimal setting (5 iterations) recovered only 51% of the hot-region contrast, against 91% for the best FBP.
 - **The optimal MLEM iteration number increases with counts: 5, 15 and 30 iterations** at 10⁴, 10⁵ and 10⁶. Past that point MLEM starts fitting noise. At 100 iterations it is worse than the best FBP at every count level.
 - **FBP image noise scales as 1/√counts, as expected from Poisson counting statistics propagated through a linear reconstruction.** At a fixed filter (Hann, cut-off = Nyquist), background SD fell by a factor of 3.19 from 10⁴ to 10⁵ counts and by 3.11 from 10⁵ to 10⁶. The expected factor is √10 ≈ 3.16.
 - **Without attenuation correction the images are not quantitative.** In a water-filled object about 18 × 24 cm across, only 22% of the photon pairs escape. The uncorrected background is 92% too low, and the hot region, which lies deep in the object, ends up darker than the less attenuated background (CR −0.60 for MLEM). With attenuation correction the background bias is within 1.5% and CR is 0.95 for both methods.
@@ -45,8 +46,10 @@ Two extensions put the count levels in physical context: photon attenuation in w
 - **Validation:**
   - Adjoint test. For random x and y, ⟨Ax, y⟩ / ⟨x, Aᵀy⟩ = 114.54, constant to within 0.005% across draws. iradon(filter_name=None) is therefore the adjoint of radon up to a constant factor, and that factor cancels between the numerator and the sensitivity image Aᵀ1.
   - Monotonicity. On noise-free data, NRMSE decreased and the Poisson log-likelihood increased at every one of 100 iterations.
+
 ![Validation of the MLEM implementation on noise-free data.](figures/mlem_noisefree.png)
 
+*One noise realisation (realisation 0) per count level. Each method is shown at its NRMSE-optimal setting, chosen across all 10 realisations, plus MLEM at 100 iterations; the grey scale is fixed at 0–1. At 10⁴ counts neither method recovers the internal structure. At 100 iterations MLEM has fitted the noise at every count level. The per-image CR values (e.g. 1.24 for FBP at 10⁴) differ from the table means because single-realisation CR is dominated by noise at low counts.*
 
 ### Attenuation (Step 7)
 | Parameter | Value |
@@ -78,6 +81,9 @@ The half-dose simulation halves the counts at each level (5 × 10³, 5 × 10⁴,
 "Mean ± SD" throughout is the spread across the 10 realisations, **not** the standard error of the mean. The standard error is smaller by a factor of √10.
 
 ## Results
+
+Each method at its NRMSE-optimal setting, plus MLEM at 100 iterations. Mean ± SD over 10 noise realisations.
+
 | Counts | Method | Setting | NRMSE | Contrast recovery | Background SD |
 |---|---|---|---|---|---|
 | 10⁴ | FBP | Hann, cut-off 0.25 | 0.603 ± 0.004 | 0.91 ± 0.30 | 0.070 ± 0.006 |
@@ -89,6 +95,8 @@ The half-dose simulation halves the counts at each level (5 × 10³, 5 × 10⁴,
 | 10⁶ | FBP | Hann, cut-off 1.0 | 0.298 ± 0.001 | 1.01 ± 0.05 | 0.046 ± 0.001 |
 | 10⁶ | MLEM | 30 iter | 0.213 ± 0.002 | 1.05 ± 0.05 | 0.038 ± 0.001 |
 | 10⁶ | MLEM | 100 iter | 0.339 ± 0.005 | 1.01 ± 0.06 | 0.095 ± 0.002 |
+
+At 10⁴ counts the SD of contrast recovery (±0.2–0.4) is comparable to its mean, so CR cannot separate the methods at that count level.
 
 ![Reconstructions from one noise realisation (realisation 0) at each count level.
 Each method is shown at its NRMSE-optimal setting, chosen across all 10 realisations, plus MLEM at 100 iterations. The grey scale is fixed at 0–1.](figures/recon_grid.png)
@@ -103,7 +111,10 @@ Mean ± SD over 10 noise realisations. Only 2.2 × 10⁵ of the 10⁶ counts are
 | FBP | yes | 0.473 ± 0.006 | 0.95 ± 0.11 | +0.3 ± 1.1% |
 | MLEM | no | 0.717 ± 0.001 | −0.60 ± 0.13 | −92.1 ± 0.2% |
 | MLEM | yes | 0.340 ± 0.004 | 0.95 ± 0.10 | −1.4 ± 1.0% |
+
  ![Photon attenuation in a water-filled object, and reconstruction with and without attenuation correction (AC).](figures/attenuation.png)
+
+ *One noise realisation (realisation 0) per count level. Each method is shown at its NRMSE-optimal setting, chosen across all 10 realisations, plus MLEM at 100 iterations; the grey scale is fixed at 0–1. At 10⁴ counts neither method recovers the internal structure. At 100 iterations MLEM has fitted the noise at every count level. The per-image CR values (e.g. 1.24 for FBP at 10⁴) differ from the table means because single-realisation CR is dominated by noise at low counts.*
 
 ### Decay, dose and half-dose imaging
  
