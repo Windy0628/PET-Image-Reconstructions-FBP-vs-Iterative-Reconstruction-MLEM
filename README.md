@@ -16,14 +16,14 @@ Two extensions put the count levels in physical context: photon attenuation in w
 - At 10⁴ counts, MLEM's lower NRMSE does not mean a better image. Its NRMSE-optimal setting (5 iterations) recovered only 51% of the hot-region contrast, against 91% for the best FBP.
 - **The optimal MLEM iteration number increases with counts: 5, 15 and 30 iterations** at 10⁴, 10⁵ and 10⁶. Past that point MLEM starts fitting noise. At 100 iterations it is worse than the best FBP at every count level.
 - **FBP image noise scales as 1/√counts, as expected from Poisson counting statistics propagated through a linear reconstruction.** At a fixed filter (Hann, cut-off = Nyquist), background SD fell by a factor of 3.19 from 10⁴ to 10⁵ counts and by 3.11 from 10⁵ to 10⁶. The expected factor is √10 ≈ 3.16.
-- **Without attenuation correction the images are not quantitative.** In a water-filled object about 18 × 24 cm across, only 22% of the photon pairs escape. The uncorrected background is 92% too low, and the hot region, which lies deep in the object, ends up darker than the less attenuated background (CR −0.60 for MLEM). With attenuation correction the background bias is within 1.5% and CR is 0.95 for both methods.
+- **Without attenuation correction the images are not quantitative.** The uncorrected background is 92% too low, and the hot region, which lies near the centre where every LOR is a long chord, ends up darker than the background (CR −0.60 for MLEM). The effect is stronger than the loss in transmission alone would predict, because the reconstruction spreads the mismatch between the attenuated data and the unattenuated model into a strong central depression.
 - **Halving the injected activity halves the dose and increases noise by √2.** A standard ¹⁸F-FDG scan (245 MBq) gives an effective dose of 4.7 mSv; half dose gives 2.3 mSv. In simulation, halving the counts raised background SD by a factor of 1.39–1.43 (expected √2 = 1.41) and NRMSE by 8–24%. A factor of 2 in counts is small next to the factor of 10 between the simulated count levels.
 
 ## Background
 - **PET and count statistics:** positron annihilation, coincidence detection, lines of response; detected counts follow a Poisson distribution, so relative noise scales as 1/√N [3].
 - **FBP:** analytic inversion of the Radon transform; fast, but does not model Poisson noise [2,4].
 - **MLEM:** is based on Poisson statistical properties of PET data, and theoretically ensures that at each iteration the 'likelihood' either increases or remains unchanged. [1][2]
-- **Attenuation.** Both 511 keV photons must leave the body to be detected, so the probability that a pair survives is exp(−∫μ dl) along the whole LOR. It depends on the total path length through the body, not on where along the LOR the annihilation happened [3]. Deep structures are therefore suppressed, and attenuation correction is required for quantitative images.
+- **Attenuation.** Both 511 keV photons must leave the body to be detected, so the probability that a pair survives is exp(−∫μ dl) along the whole LOR. It depends only on the total chord length through the body, not on where along the LOR the annihilation happened [3]. A point near the centre is crossed only by long chords, whereas a point near the edge is also crossed by short, nearly tangential ones, so central regions are suppressed more. Attenuation correction is required for quantitative images.
 - **Decay and dose.** ¹⁸F decays with half-life T½, so activity falls as A(t) = A₀ exp(−λt) with λ = ln 2 / T½. The effective dose to the patient is the injected activity multiplied by a published dose coefficient (mSv/MBq) [7].
 
 ## Method
@@ -96,7 +96,7 @@ Each method at its NRMSE-optimal setting, plus MLEM at 100 iterations. Mean ± S
 | 10⁶ | MLEM | 30 iter | 0.213 ± 0.002 | 1.05 ± 0.05 | 0.038 ± 0.001 |
 | 10⁶ | MLEM | 100 iter | 0.339 ± 0.005 | 1.01 ± 0.06 | 0.095 ± 0.002 |
 
-At 10⁴ counts the SD of contrast recovery (±0.2–0.4) is comparable to its mean, so CR cannot separate the methods at that count level.
+At 10⁴ counts CR varies strongly between realisations (SD ±0.2–0.4), so the CR of any single image is unreliable. The comparison is nevertheless clear, because both methods reconstruct the same noisy sinogram and their CR values move together (r = 0.98): the paired difference MLEM − FBP was −0.40 ± 0.12 (mean ± SD), and MLEM was lower in 10/10 realisations. MLEM at 5 iterations also gives CR = 0.50 on noise-free data, so its low contrast reflects incomplete convergence rather than noise.
 
 ![Reconstruction grid](figures/recon_grid.png)
 
