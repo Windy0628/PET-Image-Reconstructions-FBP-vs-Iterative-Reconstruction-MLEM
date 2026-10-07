@@ -39,7 +39,7 @@ Two extensions put the count levels in physical context: photon attenuation in w
 | Random seeds | `SEED = 0`. Realisation *r* at count level *i* uses `np.random.default_rng([0, i, r])` |
 
 ### Reconstruction
-- **FBP:** ramp filter multiplied by a Hann window with cut-off 0.1, 0.15, 0.25, 0.35, 0.5, 0.75 and 1.0 × Nyquist. Back-projection uses `skimage.transform.iradon`. `iradon` has no cut-off parameter, so the filter is implemented in the notebook. It is validated by setting no window and comparing with `iradon(filter_name="ramp")`: the maximum relative difference is 2.5 × 10⁻¹⁵. A separate comparison of scikit-image's five built-in filters on noise-free data is also included.
+- **FBP:** ramp filter multiplied by a Hann window with cut-off 0.1, 0.15, 0.25, 0.35, 0.5, 0.75 and 1.0 × Nyquist. Back-projection uses `skimage.transform.iradon`[5]. `iradon` has no cut-off parameter, so the filter is implemented in the notebook. It is validated by setting no window and comparing with `iradon(filter_name="ramp")`: the maximum relative difference is 2.5 × 10⁻¹⁵. A separate comparison of scikit-image's five built-in filters on noise-free data is also included.
 - **MLEM:** implemented directly in NumPy (in `notebooks/main.ipynb`) without a reconstruction library, with update rule
   x⁽ᵏ⁺¹⁾ = x⁽ᵏ⁾ / (Aᵀ1) · Aᵀ( y / (A x⁽ᵏ⁾) )
   where A is forward projection (`skimage.transform.radon`) and Aᵀ is unfiltered back-projection (`iradon(filter_name=None)`). Images were recorded at 2, 3, 5, 7, 10, 15, 20, 30, 50 and 100 iterations.
@@ -178,7 +178,7 @@ Expected runtime: about 7 minutes on the development machine, most of it in the 
 └── README.md
 ```
 ## Author
-Windy Fang: MEng Biomedical Eng student
+Windy Fang: MEng Biomedical Engineering student
 
 ## References
 
@@ -191,6 +191,6 @@ Windy Fang: MEng Biomedical Eng student
 7. ICRP (2015). Radiation Dose to Patients from Radiopharmaceuticals: a Compendium of Current Information Related to Frequently Used Substances. ICRP Publication 128. *Ann. ICRP* 44(2S).
 8. ICRP (2008). Radiation Dose to Patients from Radiopharmaceuticals. Addendum 3 to ICRP Publication 53. ICRP Publication 106. *Ann. ICRP* 38(1/2).
 9. Kondev, F. G., Wang, M., Huang, W. J., Naimi, S. & Audi, G. (2021). The NUBASE2020 evaluation of nuclear physics properties. *Chinese Physics C*, 45(3), 030001. https://doi.org/10.1088/1674-1137/abddae (¹⁸F values checked in the IAEA Nuclear Data Services NUBASE2020 viewer, https://www-nds.iaea.org/relnsd/nubase/nubase_min.html).
-10. Administration of Radioactive Substances Advisory Committee (ARSAC) (2026, July). *Notes for Guidance on the Clinical Administration of Radiopharmaceuticals and Use of Sealed Radioactive Sources*. https://assets.publishing.service.gov.uk/media/68077752148a9969d2394e47/Notes-for-guidance-on-the-clinical-administration-of-radiopharmaceuticals-and-use-of-sealed-radioactive-sources.pdf 
+10. Administration of Radioactive Substances Advisory Committee (ARSAC) (2026, July). *Notes for Guidance on the Clinical Administration of Radiopharmaceuticals and Use of Sealed Radioactive Sources*. https://assets.publishing.service.gov.uk/media/68077752148a9969d2394e47/Notes-for-guidance-on-the-clinical-administration-of-radiopharmaceuticals-and-use-of-sealed-radioactive-sources.pdf.
 
 # Future Work: further work about Ordered-Subsets Expectation-Maximization, OSEM
