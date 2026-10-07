@@ -49,7 +49,7 @@ Two extensions put the count levels in physical context: photon attenuation in w
 
 ![Validation of the MLEM implementation on noise-free data.](figures/mlem_noisefree.png)
 
-*One noise realisation (realisation 0) per count level. Each method is shown at its NRMSE-optimal setting, chosen across all 10 realisations, plus MLEM at 100 iterations; the grey scale is fixed at 0–1. At 10⁴ counts neither method recovers the internal structure. At 100 iterations MLEM has fitted the noise at every count level. The per-image CR values (e.g. 1.24 for FBP at 10⁴) differ from the table means because single-realisation CR is dominated by noise at low counts.*
+*NRMSE (log scale) and Poisson log-likelihood against iteration on noise-free data, and the images after 10 and 100 iterations. Both curves are monotonic, as required for a correct implementation.*
 
 ### Attenuation (Step 7)
 | Parameter | Value |
@@ -98,8 +98,9 @@ Each method at its NRMSE-optimal setting, plus MLEM at 100 iterations. Mean ± S
 
 At 10⁴ counts the SD of contrast recovery (±0.2–0.4) is comparable to its mean, so CR cannot separate the methods at that count level.
 
-![Reconstructions from one noise realisation (realisation 0) at each count level.
-Each method is shown at its NRMSE-optimal setting, chosen across all 10 realisations, plus MLEM at 100 iterations. The grey scale is fixed at 0–1.](figures/recon_grid.png)
+![Reconstruction grid](figures/recon_grid.png)
+
+*One noise realisation (realisation 0) per count level. Each method is shown at its NRMSE-optimal setting, chosen across all 10 realisations, plus MLEM at 100 iterations; the grey scale is fixed at 0–1. At 10⁴ counts neither method recovers the internal structure. At 100 iterations MLEM has fitted the noise at every count level. The per-image CR values (e.g. 1.24 for FBP at 10⁴) differ from the table means because single-realisation CR is dominated by noise at low counts.*
 
 ### Attenuation and attenuation correction
  
@@ -112,9 +113,9 @@ Mean ± SD over 10 noise realisations. Only 2.2 × 10⁵ of the 10⁶ counts are
 | MLEM | no | 0.717 ± 0.001 | −0.60 ± 0.13 | −92.1 ± 0.2% |
 | MLEM | yes | 0.340 ± 0.004 | 0.95 ± 0.10 | −1.4 ± 1.0% |
 
- ![Photon attenuation in a water-filled object, and reconstruction with and without attenuation correction (AC).](figures/attenuation.png)
+ ![Attenuation and attenuation correction](figures/attenuation.png)
 
- *One noise realisation (realisation 0) per count level. Each method is shown at its NRMSE-optimal setting, chosen across all 10 realisations, plus MLEM at 100 iterations; the grey scale is fixed at 0–1. At 10⁴ counts neither method recovers the internal structure. At 100 iterations MLEM has fitted the noise at every count level. The per-image CR values (e.g. 1.24 for FBP at 10⁴) differ from the table means because single-realisation CR is dominated by noise at low counts.*
+ *Left: μ map and the transmission exp(−∫μ dl) of every LOR; the longest chord (24 cm) transmits 10%. Middle and right: reconstructions without AC (top, each on its own grey scale) and with AC (bottom), and horizontal profiles. Without AC only the skull ring at the edge survives and the interior is almost empty. NRMSE without AC is dominated by the overall 92% loss of signal; contrast recovery, which does not depend on overall scale, shows the shape distortion.*
 
 ### Decay, dose and half-dose imaging
  
@@ -165,8 +166,7 @@ pip install -r requirements.txt
 jupyter notebook notebooks/main.ipynb
 ```
 Or open `notebooks/main.ipynb` in Google Colab and select **Runtime → Run all**.
-Expected runtime: about 7 minutes on the development machine, most of it in the 10-realisation experiments (Steps 6–8). Runtime on Colab has not been measured.
- 
+Expected runtime: about 2.5 minutes (139 s measured for **Run all** on a Google Colab CPU runtime), most of it in the 10-realisation experiments (Steps 6–8).
 
 ## Repository structure
  
