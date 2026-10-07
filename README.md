@@ -44,7 +44,8 @@ Two extensions put the count levels in physical context: photon attenuation in w
   where A is forward projection (`skimage.transform.radon`) and Aᵀ is unfiltered back-projection (`iradon(filter_name=None)`). Images were recorded at 2, 3, 5, 7, 10, 15, 20, 30, 50 and 100 iterations.
 - **Validation:**
   - Adjoint test. For random x and y, ⟨Ax, y⟩ / ⟨x, Aᵀy⟩ = 114.54, constant to within 0.005% across draws. iradon(filter_name=None) is therefore the adjoint of radon up to a constant factor, and that factor cancels between the numerator and the sensitivity image Aᵀ1.
-  - Monotonicity. On noise-free data, NRMSE decreased and the Poisson log-likelihood increased at every one of 100 iterations.<img width="1848" height="418" alt="noisy_sinograms" src="https://github.com/user-attachments/assets/a56244eb-a36d-4c80-9a59-af4af59b4d4d" />
+  - Monotonicity. On noise-free data, NRMSE decreased and the Poisson log-likelihood increased at every one of 100 iterations.
+![Validation of the MLEM implementation on noise-free data.](figures/mlem_noisefree.png)
 
 
 ### Attenuation (Step 7)
@@ -89,9 +90,8 @@ The half-dose simulation halves the counts at each level (5 × 10³, 5 × 10⁴,
 | 10⁶ | MLEM | 30 iter | 0.213 ± 0.002 | 1.05 ± 0.05 | 0.038 ± 0.001 |
 | 10⁶ | MLEM | 100 iter | 0.339 ± 0.005 | 1.01 ± 0.06 | 0.095 ± 0.002 |
 
-<img width="1281" height="1004" alt="image" src="https://github.com/user-attachments/assets/6f544b17-be18-48f7-87f8-03d8f82e19b7" />
-
-Figure. One noise realisation (realisation 0 of the experiment) per count level, reconstructed with the same settings as the table. At 10⁴ counts neither method recovers the internal structure. At 100 iterations MLEM has fitted the noise at every count level. The per-image CR values (e.g. 1.24 for FBP at 10⁴) differ from the table means because single-realisation CR is dominated by noise at low counts.
+![Reconstructions from one noise realisation (realisation 0) at each count level.
+Each method is shown at its NRMSE-optimal setting, chosen across all 10 realisations, plus MLEM at 100 iterations. The grey scale is fixed at 0–1.](figures/recon_grid.png)
 
 ### Attenuation and attenuation correction
  
@@ -103,11 +103,8 @@ Mean ± SD over 10 noise realisations. Only 2.2 × 10⁵ of the 10⁶ counts are
 | FBP | yes | 0.473 ± 0.006 | 0.95 ± 0.11 | +0.3 ± 1.1% |
 | MLEM | no | 0.717 ± 0.001 | −0.60 ± 0.13 | −92.1 ± 0.2% |
 | MLEM | yes | 0.340 ± 0.004 | 0.95 ± 0.10 | −1.4 ± 1.0% |
- 
-<img width="2029" height="972" alt="attenuation" src="https://github.com/user-attachments/assets/ed737b6c-acd1-42c7-a7f0-b0e6a49344c7" />
+ ![Photon attenuation in a water-filled object, and reconstruction with and without attenuation correction (AC).](figures/attenuation)
 
-*Left: μ map and the transmission exp(−∫μ dl) of every LOR; the longest chord (24 cm) transmits 10%. Middle and right: reconstructions without AC (top, each on its own grey scale) and with AC (bottom), and horizontal profiles. Without AC only the skull ring at the edge survives and the interior is almost empty. NRMSE without AC is dominated by the overall 92% loss of signal; contrast recovery, which does not depend on overall scale, shows the shape distortion.*
- 
 ### Decay, dose and half-dose imaging
  
 λ = ln 2 / 109.734 min = 0.00632 min⁻¹, so 68.4% of the activity remains at 60 min. Scanning 30 min later would lose a further 17.3% of the counts.
@@ -179,11 +176,10 @@ Windy Fang: MEng Biomedical Eng student
 3. Cherry, S. R., Sorenson, J. A. & Phelps, M. E. (2012). *Physics in Nuclear Medicine* (4th ed.). Elsevier Saunders.
 4. Kak, A. C. & Slaney, M. (1988). *Principles of Computerized Tomographic Imaging*. IEEE Press.
 5. van der Walt, S. et al. (2014). scikit-image: image processing in Python. *PeerJ*, 2, e453.
-6. Hubbell, J. H. & Seltzer, S. M. (2004). *Tables of X-Ray Mass Attenuation Coefficients and Mass Energy-Absorption Coefficients* (version 1.4). NIST Standard Reference Database 126. https://physics.nist.gov/PhysRefData/XrayMassCoef/ComTab/water.html (accessed 5 October 2026).
+6. Hubbell, J. H. & Seltzer, S. M. (2004). *Tables of X-Ray Mass Attenuation Coefficients and Mass Energy-Absorption Coefficients* (version 1.4). NIST Standard Reference Database 126. https://physics.nist.gov/PhysRefData/XrayMassCoef/ComTab/water.html 
 7. ICRP (2015). Radiation Dose to Patients from Radiopharmaceuticals: a Compendium of Current Information Related to Frequently Used Substances. ICRP Publication 128. *Ann. ICRP* 44(2S).
 8. ICRP (2008). Radiation Dose to Patients from Radiopharmaceuticals. Addendum 3 to ICRP Publication 53. ICRP Publication 106. *Ann. ICRP* 38(1/2).
-9. Kondev, F. G., Wang, M., Huang, W. J., Naimi, S. & Audi, G. (2021). The NUBASE2020 evaluation of nuclear physics properties. *Chinese Physics C*, 45(3), 030001. https://doi.org/10.1088/1674-1137/abddae (¹⁸F values checked in the IAEA Nuclear Data Services NUBASE2020 viewer, https://www-nds.iaea.org/relnsd/nubase/nubase_min.html, accessed 6 October 2026).
-10. Administration of Radioactive Substances Advisory Committee (ARSAC) (2026, July). *Notes for Guidance on the Clinical Administration of Radiopharmaceuticals and Use of Sealed Radioactive Sources*. https://assets.publishing.service.gov.uk/media/68077752148a9969d2394e47/Notes-for-guidance-on-the-clinical-administration-of-radiopharmaceuticals-and-use-of-sealed-radioactive-sources.pdf (accessed 5 October 2026)
-
+9. Kondev, F. G., Wang, M., Huang, W. J., Naimi, S. & Audi, G. (2021). The NUBASE2020 evaluation of nuclear physics properties. *Chinese Physics C*, 45(3), 030001. https://doi.org/10.1088/1674-1137/abddae (¹⁸F values checked in the IAEA Nuclear Data Services NUBASE2020 viewer, https://www-nds.iaea.org/relnsd/nubase/nubase_min.html).
+10. Administration of Radioactive Substances Advisory Committee (ARSAC) (2026, July). *Notes for Guidance on the Clinical Administration of Radiopharmaceuticals and Use of Sealed Radioactive Sources*. https://assets.publishing.service.gov.uk/media/68077752148a9969d2394e47/Notes-for-guidance-on-the-clinical-administration-of-radiopharmaceuticals-and-use-of-sealed-radioactive-sources.pdf 
 
 # Future Work: further work about Ordered-Subsets Expectation-Maximization, OSEM
